@@ -20,12 +20,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $fields = $request->validate([
             'title' => 'required|max:50',
             'content' => 'required|max:500',
         ]);
 
-        return 'ok';
+        $post = Post::create($fields);
+
+        return ['post' => $post];
     }
 
     /**
@@ -33,7 +35,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
+
     }
 
     /**
@@ -41,7 +44,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $fields = $request->validate([
+            'title' => 'required|max:50',
+            'content' => 'required|max:500',
+        ]);
+
+        $post->update($fields);
+
+        return $post;
     }
 
     /**
@@ -49,6 +59,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return['message' => 'Post is deleted'];
     }
 }
