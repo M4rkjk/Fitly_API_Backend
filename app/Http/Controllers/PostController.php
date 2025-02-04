@@ -25,9 +25,9 @@ class PostController extends Controller
             'content' => 'required|max:500',
         ]);
 
-        $post = Post::create($fields);
+        $post = $request->user()->posts()->create($fields);
 
-        return ['post' => $post];
+        return $post;
     }
 
     /**
