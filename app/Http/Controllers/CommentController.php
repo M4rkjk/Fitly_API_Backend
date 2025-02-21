@@ -26,4 +26,9 @@ class CommentController extends Controller
 
         return response()->json(['message' => 'Comment created successfully', 'comment' => $comment], 201);
     }
+
+    public function index(Post $post)
+    {
+        return response()->json(['comments' => $post->comments], 200);
+    }
 }
