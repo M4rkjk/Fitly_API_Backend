@@ -13,10 +13,25 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            //Registration data
+            $table->string('username')->unique();
             $table->string('name');
             $table->string('email')->unique();
+            $table->enum('gender', ['male', 'female', 'other']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            //
+
+            //Profile data
+            $table->integer('age')->nullable();
+            $table->double('height')->nullable();
+            $table->double('weight')->nullable();
+            $table->double('recommended_calories')->nullable();
+            $table->enum('lose_or_gain', ['lose', 'gain'])->nullable();
+            $table->double('goal_weight')->nullable();
+            //
+
+            $table->boolean('admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
