@@ -34,7 +34,12 @@ class PostController extends Controller implements HasMiddleware
         $fields = $request->validate([
             'title' => 'required|max:50',
             'content' => 'required|max:2000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        if ($request->hasFile('image')) {
+            $fields['image_path'] = $request->file('image')->store('posts', 'public');
+        }
 
         $post = $request->user()->posts()->create($fields);
 
@@ -46,6 +51,8 @@ class PostController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
+        $post->image_url = $post->image_path ? asset('storage/' . $post->image_path) : null;
+        
         return $post;
 
     }
