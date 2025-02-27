@@ -15,6 +15,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'gender' => 'required|in:male,female,other',
+            'birthday' => 'required|date|before:today',
             'password' => 'required|confirmed'
         ]);
 

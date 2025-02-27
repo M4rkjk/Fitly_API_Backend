@@ -14,16 +14,15 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             //Registration data
-            $table->string('username')->unique()->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('gender', ['male', 'female', 'other']);
+            $table->date('birthday');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             //
 
             //Profile data
-            $table->integer('age')->nullable();
             $table->double('height')->nullable();
             $table->double('weight')->nullable();
             $table->double('recommended_calories')->nullable();

@@ -24,7 +24,7 @@ class User extends Authenticatable
         'email',
         'gender',
         'password',
-        'age',
+        'birthday',
         'height',
         'weight',
         'recommended_calories',
