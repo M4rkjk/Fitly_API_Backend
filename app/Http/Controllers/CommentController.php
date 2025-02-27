@@ -30,6 +30,6 @@ class CommentController extends Controller
     public function index(Post $post)
     {
         $comments = $post->comments()->with('user')->get();
-        return response()->json(['comments' => $post->comments], 200);
+        return response()->json(['comments' => $comments], 200);
     }
 }
