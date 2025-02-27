@@ -15,11 +15,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('posts', PostController::class);
-
     Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
 
     Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+
+    Route::put('/users/profile', [AuthController::class, 'updateProfile']);
 
 });
 
@@ -29,6 +29,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::apiResource('posts', PostController::class);
+
 
 
 
