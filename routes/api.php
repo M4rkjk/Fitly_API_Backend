@@ -17,8 +17,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
 
-    Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
-
     Route::put('/users/profile', [AuthController::class, 'updateProfile']);
 
 });
@@ -32,6 +30,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('posts', PostController::class);
 
-
+Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 
 
