@@ -19,10 +19,18 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'gender',
         'password',
+        'age',
+        'height',
+        'weight',
+        'recommended_calories',
+        'lose_or_gain',
+        'goal_weight',
+        'admin'
     ];
 
     /**
@@ -45,9 +53,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'age' => 'integer',
+            'height' => 'float',
+            'weight' => 'float',
+            'recommended_calories' => 'float',
+            'goal_weight' => 'float',
+            'admin' => 'boolean'
         ];
     }
-
     public function posts()
     {
         return $this->hasMany(Post::class);
