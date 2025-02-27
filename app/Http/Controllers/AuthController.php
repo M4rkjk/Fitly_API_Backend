@@ -30,6 +30,26 @@ class AuthController extends Controller
         ];
     }
 
+    public function updateProfile(Request $request){
+        $user = Auth::user();
+
+        $fields = $request->validate([
+            'age' => 'nullable|integer',
+            'height' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'recommended_calories' => 'nullable|numeric',
+            'lose_or_gain' => 'nullable|in:lose,gain',
+            'goal_weight' => 'nullable|numeric',
+        ]);
+
+        $user->update($fields);
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user
+        ]);
+    }
+
     public function login(Request $request)
     {
         $fields = $request->validate([
