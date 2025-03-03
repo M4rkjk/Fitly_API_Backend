@@ -13,6 +13,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
+        'image_path', 
     ];
 
     public function user()
@@ -23,5 +24,10 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image_path ? asset('storage/' . $this->image_path) : null;
     }
 }
