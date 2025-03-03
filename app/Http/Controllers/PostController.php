@@ -13,7 +13,7 @@ class PostController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('auth:sanctum', except: ['index', 'show'])
+            new Middleware('auth:sanctum', except: ['index', 'show']),
         ];
     }
 
@@ -77,9 +77,9 @@ class PostController extends Controller implements HasMiddleware
             }
             $fields['image_path'] = $request->file('image')->store('posts', 'public');
         }
-    
+
         $post->update($fields);
-    
+
         return response()->json([
             'message' => 'Post updated successfully!',
             'post' => $post
