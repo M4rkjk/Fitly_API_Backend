@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PostReactionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('posts', PostController::class);
 
-Route::apiResource('post-reactions', PostReactionsController::class);
+Route::apiResource('post-reactions', PostReactionController::class);
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PostReactions;
+use App\Models\PostReaction;
 use Illuminate\Http\Request;
 
-class PostReactionsController extends Controller
+class PostReactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $reactions = PostReactions::all();
+        $reactions = PostReaction::all();
 
         return response()->json($reactions);
     }
@@ -24,7 +24,7 @@ class PostReactionsController extends Controller
             'reaction' => 'required|string|in:like,dislike,love',
         ]);
 
-        $reaction = PostReactions::create($validated);
+        $reaction = PostReaction::create($validated);
 
         return response()->json($reaction, 201);
     }
@@ -33,31 +33,33 @@ class PostReactionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PostReactions $postReactions)
+    public function show(PostReaction $postReaction)
     {
-        return response()->json($postReactions);
+        return response()->json($postReaction);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PostReactions $postReactions)
+    public function update(Request $request, PostReaction $postReaction)
     {
         $validated = $request->validate([
             'reaction' => 'required|string|in:like,dislike,love',
         ]);
 
-        $postReactions->update($validated);
+        $postReaction->update([
+            'reaction' => $validated['reaction']
+        ]);
 
-        return response()->json($postReactions);
+        return response()->json($postReaction);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostReactions $postReactions)
+    public function destroy(PostReaction $postReaction)
     {
-        $postReactions->delete();
+        $postReaction->delete();
 
         return response()->json(['message' => "Reaction is deleted"]);
     }

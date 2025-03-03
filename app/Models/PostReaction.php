@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PostReactions extends Model
+class PostReaction extends Model
 {
-    /** @use HasFactory<\Database\Factories\PostReactionsFactory> */
+    /** @use HasFactory<\Database\Factories\PostReactionFactory> */
 
     protected $fillable = ['user_id', 'post_id', 'reaction'];
 
 
     /**
-     * Get the post that owns the PostReactions
+     * Get the post that owns the PostReaction
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -24,7 +24,7 @@ class PostReactions extends Model
     }
 
     /**
-     * Get the user that owns the PostReactions
+     * Get the user that owns the PostReaction
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
