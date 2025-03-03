@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostReactionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::put('/users/profile', [AuthController::class, 'updateProfile']);
 
+
 });
 
 
@@ -29,6 +31,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('posts', PostController::class);
+
+Route::apiResource('post-reactions', PostReactionsController::class);
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 
