@@ -33,7 +33,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::apiResource('posts', PostController::class);
 
-Route::apiResource('post-reactions', PostReactionController::class);
+Route::post('posts/{post}/reactions', [PostReactionController::class, 'storeReaction']);
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 

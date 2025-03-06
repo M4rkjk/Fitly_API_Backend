@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\PostReaction;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -29,17 +30,19 @@ class PostReactionController extends Controller implements HasMiddleware
     }
 
 
-    public function store(Request $request){
-
+    public function storeReaction(Request $request, Post $post)
+    {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'post_id' => 'required|exists:posts,id',
-            'reaction' => 'required|string|in:like,dislike,love',
+            'reaction' => 'required|in:like,dislike,love',
         ]);
 
-        $reaction = PostReaction::create($validated);
+        $reaction = PostReaction::updateOrCreate(
+            ['post_id' => $post->id, 'user_id' => $validated['user_id']],
+            ['reaction' => $validated['reaction']]
+        );
 
-        return response()->json($reaction, 201);
+        return response()->json($reaction, 200);
     }
 
 
