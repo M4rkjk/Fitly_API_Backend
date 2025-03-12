@@ -29,6 +29,12 @@ class PostReactionController extends Controller implements HasMiddleware
         return response()->json($reactions);
     }
 
+    public function getReactionsForPost(Post $post)
+    {
+        $reactions = PostReaction::where('post_id', $post->id)->get();
+        return response()->json($reactions);
+    }
+
 
     public function storeReaction(Request $request, Post $post)
     {
