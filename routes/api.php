@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PostReactionsController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,8 @@ Route::post('posts/{post}/reactions', [PostReactionController::class, 'storeReac
 Route::get('posts/{post}/reactions', [PostReactionController::class, 'getReactionsForPost']);
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
+
+Route::apiResource('recipes', RecipeController::class);
+
 
 

@@ -11,11 +11,7 @@ class Recipe extends Model
     /** @use HasFactory<\Database\Factories\RecipeFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'image_paths', 'ingredients', 'description', 'avg_time', 'user_id'];
-
-    protected $casts = [
-        'image_paths' => 'array',
-    ];
+    protected $fillable = ['title', 'ingredients', 'description', 'avg_time', 'image_paths'];
 
     /**
      * Get the user that owns the Recipe
@@ -24,6 +20,6 @@ class Recipe extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
