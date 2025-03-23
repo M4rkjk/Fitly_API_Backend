@@ -81,7 +81,36 @@ class RecipeController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        if ($request->user()->id !== $recipe->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $fields = $request->validate([
+            'title' => 'nullable|max:50',
+            'ingredients' => 'nullable|max:500',
+            'description' => 'nullable|max:2048',
+            'avg_time' => 'nullable|max:50',
+            'image_paths' => 'nullable|array',
+            'image_paths.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        if ($request->hasFile('image_paths')) {
+            $imagePaths = [];
+
+            foreach ($request->file('image_paths') as $image) {
+                $imagePaths[] = $image->store('recipes', 'public');
+            }
+
+            $fields['image_paths'] = json_encode($imagePaths);
+        }
+
+        $recipe->update($fields);
+
+        return response()->json([
+            'message' => 'Recipe updated successfully!',
+            'data' => $recipe
+        ]);
     }
 
     /**

@@ -32,15 +32,18 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::apiResource('posts', PostController::class);
+Route::apiResource('/posts', PostController::class);
 
-Route::post('posts/{post}/reactions', [PostReactionController::class, 'storeReaction']);
+Route::post('/posts/{post}/reactions', [PostReactionController::class, 'storeReaction']);
 
-Route::get('posts/{post}/reactions', [PostReactionController::class, 'getReactionsForPost']);
+Route::get('/posts/{post}/reactions', [PostReactionController::class, 'getReactionsForPost']);
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 
-Route::apiResource('recipes', RecipeController::class);
+Route::apiResource('/recipes', RecipeController::class);
+
+
+
 
 
 
