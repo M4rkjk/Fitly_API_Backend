@@ -122,7 +122,6 @@ class RecipeController extends Controller implements HasMiddleware
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // Töröljük a képeket a fájlrendszerből
         if ($recipe->image_paths) {
             $imagePaths = json_decode($recipe->image_paths, true);
             foreach ($imagePaths as $path) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PostReactionsController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::put('/users/profile', [AuthController::class, 'updateProfile']);
 
+    Route::get('/users', [UserController::class, 'index']);
 
 });
 
