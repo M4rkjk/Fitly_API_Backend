@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Ingredient extends Model
+class Meal extends Model
 {
-    /** @use HasFactory<\Database\Factories\IngredientFactory> */
+    /** @use HasFactory<\Database\Factories\MealFactory> */
     use HasFactory;
 
     public $timestamps = false;
@@ -16,14 +17,15 @@ class Ingredient extends Model
     protected $guarded = ['id'];
 
     /**
-     * The meals that belong tohe Ingredient
+     * The ingredients that belong to the Meal
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function meals(): BelongsToMany
+    public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(Meal::class, 'meal_ingredients')
+        return $this->belongsToMany(Ingredient::class, 'meal_ingredients')
                     ->withPivot('user_id', 'amount');
     }
-
 }
+
+
