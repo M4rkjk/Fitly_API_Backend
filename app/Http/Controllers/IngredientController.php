@@ -9,12 +9,6 @@ use Illuminate\Routing\Controllers\Middleware;
 class IngredientController extends Controller
 {
 
-    public static function middleware()
-    {
-        return [
-            new Middleware('auth:sanctum', except: ['index', 'show']),
-        ];
-    }
 
     /**
      * Display a listing of the resource.
@@ -30,7 +24,7 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-            $user = auth('sanctum')->user();
+        $user = auth('sanctum')->user();
 
         if (!$user) {
             return response()->json([
