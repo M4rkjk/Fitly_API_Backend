@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReactionController;
 use App\Http\Controllers\PostReactionsController;
@@ -45,6 +47,11 @@ Route::get('/posts/{post}/reactions', [PostReactionController::class, 'getReacti
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 
 Route::apiResource('/recipes', RecipeController::class);
+
+Route::get('/ingredients', [IngredientController::class, 'index']);
+Route::post('/ingredients', [IngredientController::class, 'store']);
+
+Route::get('/meals', [MealController::class, 'index']);
 
 
 

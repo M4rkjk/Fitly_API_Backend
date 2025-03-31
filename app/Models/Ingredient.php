@@ -22,7 +22,7 @@ class Ingredient extends Model
      */
     public function meals(): BelongsToMany
     {
-        return $this->belongsToMany(Meal::class, 'meal_ingredients')
+        return $this->belongsToMany(Meal::class, 'meals_ingredients')
                     ->withPivot('user_id', 'amount');
     }
 
