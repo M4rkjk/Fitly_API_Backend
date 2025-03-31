@@ -22,10 +22,9 @@ class RecipeController extends Controller implements HasMiddleware
     public function index()
     {
         $recipes = Recipe::all()->map(function ($recipe) {
-            if ($recipe->image_paths) {
-                $recipe->image_paths = json_decode($recipe->image_paths, true);
-            }
-            return $recipe;
+            return array_merge($recipe->toArray(), [
+                'image_urls' => $recipe->image_urls
+            ]);
         });
 
         return response()->json($recipes);
@@ -67,12 +66,10 @@ class RecipeController extends Controller implements HasMiddleware
      */
     public function show(Recipe $recipe)
     {
-        if ($recipe->image_paths) {
-            $recipe->image_paths = json_decode($recipe->image_paths, true);
-        }
-
         return response()->json([
-            'recipe' => $recipe
+            'recipe' => array_merge($recipe->toArray(), [
+                'image_urls' => $recipe->image_urls
+            ])
         ]);
     }
 

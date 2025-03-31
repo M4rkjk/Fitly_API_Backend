@@ -22,4 +22,15 @@ class Recipe extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getImageUrlsAttribute()
+    {
+        if (!$this->image_paths) {
+            return [];
+        }
+
+        $imagePaths = json_decode($this->image_paths, true);
+
+        return array_map(fn($path) => asset("storage/{$path}"), $imagePaths);
+    }
 }
