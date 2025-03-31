@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 
 class IngredientController extends Controller
 {
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -21,6 +30,15 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
+            $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized: No authenticated user found.'
+            ], 401);
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
             'kcal' => 'required|numeric',
@@ -37,8 +55,8 @@ class IngredientController extends Controller
 
         if ($request->has('meal_id')) {
             $ingredient->meals()->attach($request->meal_id, [
-                'user_id' => auth()->id(),
-                'amount' => $request->amount ?? 0 
+                'user_id' => $user->id,
+                'amount' => $request->amount ?? 0
             ]);
         }
 
