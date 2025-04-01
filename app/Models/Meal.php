@@ -17,15 +17,15 @@ class Meal extends Model
     protected $guarded = ['id'];
 
     /**
-     * The ingredients that belong to the Meal
+     * The user that belong to the Meal
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function ingredients(): BelongsToMany
+    public function user(): BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class, 'meals_ingredients')
-                    ->withPivot('user_id', 'amount');
+        return $this->belongsToMany(User::class)->withPivot('amount');
     }
+
 }
 
 
