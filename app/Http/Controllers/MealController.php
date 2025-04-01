@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MealController extends Controller
@@ -16,35 +17,13 @@ class MealController extends Controller
         return response()->json($meals);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function addMealToUser(Request $request)
     {
-        //
-    }
+        $user = auth()->user(); 
+        $meal = Meal::findOrFail($request->meal_id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Meal $meal)
-    {
-        //
-    }
+        $user->meals()->attach($meal->id, ['amount' => $request->amount]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Meal $meal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Meal $meal)
-    {
-        //
+        return response()->json(['message' => 'Étel hozzáadva a felhasználóhoz.']);
     }
 }

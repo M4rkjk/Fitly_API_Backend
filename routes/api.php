@@ -29,6 +29,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::get('/users/{id}', [UserController::class, 'show']);
 
+    Route::get('/meals', [MealController::class, 'index']);
+
+    Route::post('/meals/user', [MealController::class, 'addMealToUser']);
+
 });
 
 
@@ -47,11 +51,6 @@ Route::get('/posts/{post}/reactions', [PostReactionController::class, 'getReacti
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
 
 Route::apiResource('/recipes', RecipeController::class);
-
-Route::get('/ingredients', [IngredientController::class, 'index']);
-Route::post('/ingredients', [IngredientController::class, 'store']);
-
-Route::get('/meals', [MealController::class, 'index']);
 
 
 
