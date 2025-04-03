@@ -33,6 +33,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::post('/meals/user', [MealController::class, 'addMealToUser']);
 
+    Route::get('/users/{userId}/calories', [MealController::class, 'getUserTotalCalories']);
+
+    Route::delete('/meals/user/{mealId}', [MealController::class, 'removeMealFromUser']);
+
 });
 
 
