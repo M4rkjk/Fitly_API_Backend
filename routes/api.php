@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::delete('/meals/user/{mealId}', [MealController::class, 'removeMealFromUser']);
 
+    Route::post('/user/avatar', [AuthController::class, 'uploadAvatar']);
+
 });
 
 

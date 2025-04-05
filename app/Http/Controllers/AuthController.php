@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -84,4 +85,32 @@ class AuthController extends Controller
             'message' => 'You are logged out.'
         ];
     }
+
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+
+        $user = auth()->user();
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $path = $file->storeAs('avatars', $filename, 'public');
+
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            $user->avatar = $path;
+            $user->save();
+
+            return response()->json(['message' => 'Avatar feltöltve', 'path' => $path], 200);
+        }
+
+        return response()->json(['error' => 'Nincs fájl'], 400);
+    }
+
+
 }
