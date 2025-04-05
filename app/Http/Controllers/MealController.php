@@ -22,7 +22,10 @@ class MealController extends Controller
         $user = auth()->user();
         $meal = Meal::findOrFail($request->meal_id);
 
-        $user->meals()->attach($meal->id, ['amount' => $request->amount]);
+        $user->meals()->attach($meal->id, [
+            'amount' => $request->amount,
+            'created_at' => now(),
+        ]);
 
         return response()->json(['message' => 'Étel hozzáadva a felhasználóhoz.']);
     }
