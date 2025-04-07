@@ -21,7 +21,7 @@ class RecipeController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $recipes = Recipe::with('user')->all()->map(function ($recipe) {
+        $recipes = Recipe::all()->map(function ($recipe) {
             return array_merge($recipe->toArray(), [
                 'image_urls' => $recipe->image_urls
             ]);
