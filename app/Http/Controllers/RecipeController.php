@@ -128,7 +128,6 @@ class RecipeController extends Controller implements HasMiddleware
             }
         }
 
-        // Töröljük a receptet
         $recipe->delete();
 
         return response()->json([

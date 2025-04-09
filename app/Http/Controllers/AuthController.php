@@ -112,5 +112,4 @@ class AuthController extends Controller
         return response()->json(['error' => 'Nincs fájl'], 400);
     }
 
-
 }
