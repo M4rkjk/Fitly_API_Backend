@@ -5,6 +5,9 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
+use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Http\UploadedFile as HttpUploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile as FileUploadedFile;
 
 class AuthTest extends TestCase
 {
@@ -15,7 +18,7 @@ class AuthTest extends TestCase
         $response = $this->postJson('/api/register', [
             'name' => 'Teszt Elek',
             'email' => 'teszt@example.com',
-            'gender' => 'male',  
+            'gender' => 'male',
             'birthday' => '2000-01-01',
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -59,5 +62,36 @@ class AuthTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJsonPath('errors.email.0', 'The provided credentials are inconrrect.');
+    }
+
+    public function test_user_can_update_profile()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->putJson('/api/users/profile', [
+            'height' => 180,
+            'weight' => 75,
+            'goal_weight' => 70,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('message', 'Profile updated successfully');
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'height' => 180,
+            'weight' => 75,
+            'goal_weight' => 70,
+        ]);
+    }
+
+    public function test_user_can_logout()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->postJson('/api/logout');
+
+        $response->assertStatus(200);
+        $response->assertJson(['message' => 'You are logged out.']);
+        $this->assertEquals(0, $user->tokens()->count());
     }
 }
