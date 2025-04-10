@@ -45,10 +45,21 @@ class MealController extends Controller
         $user = auth()->user();
         $meal = Meal::findOrFail($request->meal_id);
 
+        $caloriesToSubtract = ($meal->kcal * $request->amount) / 100;
+
         $user->meals()->attach($meal->id, [
             'amount' => $request->amount,
             'created_at' => now(),
         ]);
+
+        if (!is_null($user->recommended_calories)) {
+            $user->recommended_calories -= $caloriesToSubtract;
+
+            if ($user->recommended_calories < 0) {
+                $user->recommended_calories = 0;
+            }
+            $user->save();
+        }
 
         return response()->json(['message' => 'Étel hozzáadva a felhasználóhoz.']);
     }
