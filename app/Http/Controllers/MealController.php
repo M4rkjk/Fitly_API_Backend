@@ -23,12 +23,12 @@ class MealController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'kcal' => 'required|numeric|min:0',
-            'fat' => 'nullable|numeric|min:0',
-            'carb' => 'nullable|numeric|min:0',
-            'protein' => 'nullable|numeric|min:0',
-            'salt' => 'nullable|numeric|min:0',
-            'sugar' => 'nullable|numeric|min:0',
+            'kcal' => 'required|numeric|min:0|max:1200',
+            'fat' => 'nullable|numeric|min:0|max:150',
+            'carb' => 'nullable|numeric|min:0|max:150',
+            'protein' => 'nullable|numeric|min:0|max:150',
+            'salt' => 'nullable|numeric|min:0|max:100',
+            'sugar' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $meal = new Meal($validated);
