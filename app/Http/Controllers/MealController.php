@@ -17,6 +17,29 @@ class MealController extends Controller
         return response()->json($meals);
     }
 
+    public function store(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'kcal' => 'required|numeric|min:0',
+            'fat' => 'nullable|numeric|min:0',
+            'carb' => 'nullable|numeric|min:0',
+            'protein' => 'nullable|numeric|min:0',
+            'salt' => 'nullable|numeric|min:0',
+            'sugar' => 'nullable|numeric|min:0',
+        ]);
+
+        $meal = new Meal($validated);
+        $meal->save();
+
+        return response()->json([
+            'message' => 'Új étel sikeresen létrehozva.',
+            'meal' => $meal,
+        ], 201);
+    }
+
     public function addMealToUser(Request $request)
     {
         $user = auth()->user();

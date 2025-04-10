@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('kcal');
-            $table->double('fat');
-            $table->double('carb');
-            $table->double('protein');
-            $table->double('salt');
-            $table->double('sugar');
+            $table->double('fat')->nullable();
+            $table->double('carb')->nullable();
+            $table->double('protein')->nullable();
+            $table->double('salt')->nullable();
+            $table->double('sugar')->nullable();
         });
     }
 
