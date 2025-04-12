@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'gender' => 'required|in:male,female,other',
             'birthday' => 'required|date|before:today',
-            'password' => 'required|confirmed'
+            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()]
+
         ]);
 
         $fields['password'] = bcrypt($request->password);
